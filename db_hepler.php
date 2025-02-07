@@ -1,19 +1,24 @@
 <?php
 require_once 'db_conn.php';
-
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 class db_hepler extends db_conn {
     public function __construct($host, $dbname, $user, $pass) {
         parent::__construct($host, $dbname, $user, $pass);
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  // ✅ Set error mode
     }
     public function fetchAll($table) {
-        try {
-            $stmt = $this->conn->query("SELECT * FROM $table");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            $this->logError($e->getMessage());
-            return [];
-        }
+        if($_SERVER ['REQUEST_METHOD'] == 'GET'){ 
+             try {
+                 $stmt = $this->conn->query("SELECT * FROM $table");
+                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                } catch (PDOException $e) {
+                    $this->logError($e->getMessage());
+                    return [];
+                }
+            }
     }
 
     public function insert($table, $data) {
