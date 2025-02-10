@@ -1,5 +1,5 @@
 <?php
-require_once '../../db_hepler.php';
+require_once '../../ex2/db_hepler.php';
 
 // Set headers
 header("Content-Type: application/json; charset=UTF-8");

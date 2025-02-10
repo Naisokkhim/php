@@ -20,5 +20,3 @@ class db_conn {
         return $this->conn;
     }
 }
-
-?>
