@@ -1,17 +1,16 @@
 const api = "http://localhost/schoolTask/CRUD_API_Task/api/task.php";
 
-// Fetch tasks when the page loads
+
 document.addEventListener("DOMContentLoaded", async () => {
   const tasks = await fetchTasks();
   displayTasks(tasks);
 });
 
-// ✅ Fetch tasks from API
 const fetchTasks = async () => {
   try {
     const res = await fetch(api, { method: "GET" });
 
-    if (!res.ok) {
+    if (!res.ok){
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
 
@@ -22,10 +21,9 @@ const fetchTasks = async () => {
   }
 };
 
-// ✅ Display tasks in the UI
 const displayTasks = (tasks) => {
   const taskList = document.querySelector(".task-list");
-  taskList.innerHTML = ""; // Clear the list before adding new tasks
+  taskList.innerHTML = "";
 
   tasks.forEach((task) => {
     const li = document.createElement("li");
@@ -42,7 +40,7 @@ const displayTasks = (tasks) => {
   });
 };
 
-// ✅ Delete task from API
+
 const deleteTask = async (taskId) => {
   if (!confirm("Are you sure you want to delete this task?")) return;
 
@@ -51,7 +49,7 @@ const deleteTask = async (taskId) => {
 
     if (!res.ok) throw new Error("Failed to delete task!");
 
-    fetchTasks().then(displayTasks); // Refresh task list after deletion
+    fetchTasks().then(displayTasks);
   } catch (err) {
     console.error("Error deleting task:", err);
   }

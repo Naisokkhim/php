@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 class db_hepler extends db_conn {
     public function __construct($host, $dbname, $user, $pass) {
         parent::__construct($host, $dbname, $user, $pass);
-        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  // ✅ Set error mode
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
     }
     public function fetchAll($table) {
         if($_SERVER ['REQUEST_METHOD'] == 'GET'){ 

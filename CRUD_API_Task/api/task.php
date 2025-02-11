@@ -7,21 +7,20 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// Initialize database connection
+
 $db_task = new db_hepler("localhost", "task_mg", "root", "");
 
-// Handle GET request
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     getTask($db_task);
 }
 
-// Handle POST request (Add Task)
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
     addTask($db_task, $data);
 }
 
-// Function to fetch tasks
 function getTask($db_task) {
     try {
         $task = $db_task->fetchAll("task");
@@ -36,7 +35,6 @@ function getTask($db_task) {
     }
 }
 
-// Function to add a task
 function addTask($db_task, $data) {
     try {
         $task = $db_task->insert("task", $data);
