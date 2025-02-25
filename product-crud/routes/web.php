@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\SimpleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+use App\Http\Controllers\ProductController;
 
-Route::get('/greet', [SimpleController::class, 'greet']);
+Route::resource('products', ProductController::class);
