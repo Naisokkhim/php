@@ -9,7 +9,6 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Define the fields that can be mass-assigned
     protected $fillable = [
         'name',
         'description',
