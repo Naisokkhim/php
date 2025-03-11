@@ -41,10 +41,20 @@
                     </button>
                     <div class="ml-3 relative">
                         <div>
-                            <button type="button" class="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button">
+                            <button type="button" class="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="sr-only">Open user menu</span>
                                 <img class="h-8 w-8 rounded-full" src="/api/placeholder/40/40" alt="User profile">
                             </button>
+                        </div>
+                        <!-- User Profile Dropdown -->
+                        <div id="user-menu-dropdown" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                            <a href="{{ route('profile.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                            <hr class="my-1">
+                            <form method="POST" action="{{ route('logout') }}" class="block">
+                                @csrf
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -276,6 +286,30 @@
 
     <!-- Scripts -->
     <script>
+        // User Profile Dropdown Toggle
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenuDropdown = document.getElementById('user-menu-dropdown');
+        
+        userMenuButton.addEventListener('click', () => {
+            const expanded = userMenuButton.getAttribute('aria-expanded') === 'true';
+            userMenuButton.setAttribute('aria-expanded', !expanded);
+            
+            if (expanded) {
+                userMenuDropdown.classList.add('hidden');
+            } else {
+                userMenuDropdown.classList.remove('hidden');
+                
+                // Close the dropdown when clicking outside
+                document.addEventListener('click', function closeDropdown(e) {
+                    if (!userMenuButton.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+                        userMenuDropdown.classList.add('hidden');
+                        userMenuButton.setAttribute('aria-expanded', 'false');
+                        document.removeEventListener('click', closeDropdown);
+                    }
+                });
+            }
+        });
+
         // Simulate loading state
         window.addEventListener('load', () => {
             const loading = document.getElementById('loading');
